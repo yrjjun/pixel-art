@@ -318,20 +318,19 @@
             background:#f9fafc;border:1px solid #d0d4e4;max-width:800px;line-height:1.6;">
                 <h2 style="margin-top:0;">🧭 使用说明</h2>
                 <ul style="margin:0;padding-left:20px;">
-                    <li><b>🧩 网格</b> 按钮：显示 / 隐藏画布网格</li>
-                    <li><b>Alt</b>：临时进入取色模式, 松开后恢复上一个工具</li>
-                    <li><b>选区</b>高亮为橙色半透明斜线, 粘贴后可拖动, 按 Enter 放置, Esc 取消</li>
-                    <li><b>Shift + 拖动</b>：在矩形选区模式下叠加选区</li>
+                    <li><b>按键快捷键</b>：笔刷 B, 橡皮擦 E, 取色 Alt, 填充 F, 选区 M, 网格 G</li>
+                    <li><b>撤回与重做</b>：Ctrl + Z 撤回 Ctrl + Y 重做</li>
+                    <li><b>选区</b>：长按拖动选取，粘贴后可拖动,Shift + 拖动 叠加选区。按 Enter 放置, Esc 取消</li>
+                    <li>——选区支持矩形和手涂两种方式；手涂选取为逐像素切换选中状态。</li>
                     <li><b>Ctrl + C / X / V</b>：复制 / 剪切 / 粘贴选区</li>
-                    <li><b>Enter</b>：确认移动或粘贴的预览</li>
-                    <li><b>Esc</b>：取消粘贴或清除选区</li>
-                    <li><b>🎨 颜色重映射</b> 点击两个颜色进行互换, 将颜色重新映射</li>
-                    <li><b>🎲</b> 按钮：随机打乱颜色, 重新映射</li>
-                    <li><b>↩️</b> 按钮：恢复原始颜色映射</li>
-                    <li><b>保存与导出</b>：点击右上角的导出按钮保存为文件</li>
+                    <li><b>对称模式</b>：将绘制操作对称，试试就知道了</li>
+                    <li><b>调色板</b>：因为是做进地图里的所以没法很复杂，就16种颜色，发挥想象力吧()</li>
+                    <li><b>颜色重映射</b>：点击两个颜色进行互换, 将颜色重新映射。🎲随机打乱颜色，↩️恢复原始颜色映射</li>
+                    <li><b>导入导出</b>：点击右侧导出自动复制到剪贴板，导入会从输入框读取，没有就从剪贴板拿</li>
+                    <li><b>导入图片</b>：使用就近颜色和像素强制把图片缩放到画布上</li>
                 </ul>
                 <p style="margin-top:10px;color:#555;">
-                    💡 提示：选区支持矩形和手涂两种方式；手涂选取为逐像素切换选中状态。
+                    💡 提示：虽然网页关闭时会自动保存，还请手动保存防止丢失
                 </p>
             </div>
         </div>
@@ -340,28 +339,28 @@
             <div class="panel-section">
                 <h3>工具</h3>
                 <div class="btn-group">
-                    <button id="pen" class="active" title="画笔 (左键绘制)">🖌️ 画笔</button>
-                    <button id="eraser" title="橡皮擦">🧹 橡皮擦</button>
-                    <button id="eyedropper" title="取色">🎯 取色</button>
+                    <button id="pen" class="active" title="画笔 B">🖌️ 画笔</button>
+                    <button id="eraser" title="橡皮擦 E">🧹 橡皮擦</button>
+                    <button id="eyedropper" title="取色 Alt">🎯 取色</button>
                     <button id="line" title="直线">📏 直线</button>
                     <button id="rect" title="矩形">⬛ 矩形</button>
                     <button id="circle" title="圆形">⚪ 圆形</button>
-                    <button id="fill" title="填充">💧 填充</button>
-                    <button id="undo" title="撤回 (Ctrl+Z)">↩️ 撤回</button>
-                    <button id="redo" title="重做 (Ctrl+Y)">↪️ 重做</button>
+                    <button id="fill" title="填充 F">💧 填充</button>
+                    <button id="undo" title="撤回 Ctrl+Z">↩️ 撤回</button>
+                    <button id="redo" title="重做 Ctrl+Y">↪️ 重做</button>
                     <button id="clear" style="background:#e74c3c" title="清空">🗑️ 清空</button>
-                    <button id="toggleGrid" title="显示/隐藏网格">🧩 网格</button>
+                    <button id="toggleGrid" title="显示/隐藏网格 G">🧩 网格</button>
                 </div>
                 <div style="margin-top:12px">
                     <strong>选区</strong>
                     <div class="btn-group" style="margin-top:8px">
-                        <button id="selRect" title="矩形选取 (Shift 叠加)">▭ 矩形选取</button>
+                        <button id="selRect" title="矩形选取 M (Shift 叠加)">▭ 矩形选取</button>
                         <button id="selFree" title="手涂逐像素选取（再次涂则取消）">✍️ 手涂选取</button>
                         <button id="selMove" title="移动选区 (剪切并粘贴)">⤴️ 移动</button>
-                        <button id="selCopy" title="复制选区 (Ctrl+C)">📄 复制</button>
-                        <button id="selCut" title="剪切选区 (Ctrl+X)">✂️ 剪切</button>
-                        <button id="selPaste" title="粘贴 (Ctrl+V)">📌 粘贴</button>
-                        <button id="selClear" title="清除选区 (Esc)">✖️ 清除选区</button>
+                        <button id="selCopy" title="复制选区 Ctrl+C">📄 复制</button>
+                        <button id="selCut" title="剪切选区 Ctrl+X">✂️ 剪切</button>
+                        <button id="selPaste" title="粘贴 Ctrl+V">📌 粘贴</button>
+                        <button id="selClear" title="清除选区 Esc">✖️ 清除选区</button>
                     </div>
                 </div>
             </div>
@@ -1251,6 +1250,74 @@ function showToast(message) {
         }, 10); // 确保元素被添加到DOM后立即开始动画
     }
 
+/* ====== 本地自动保存/恢复（localStorage） ====== */
+const _LOCAL_KEY = 'pixelEditor:state:v1';
+
+function saveCanvasToLocal() {
+    try {
+        const state = {
+            COLS, ROWS,
+            colorPalette,
+            pixelData,
+            currentMapping,
+            currentColor,
+            symmetryMode
+        };
+        localStorage.setItem(_LOCAL_KEY, JSON.stringify(state));
+    } catch (err) {
+        console.warn('保存本地缓存失败', err);
+    }
+}
+
+function loadCanvasFromLocal() {
+    try {
+        const raw = localStorage.getItem(_LOCAL_KEY);
+        if (!raw) return false;
+        const s = JSON.parse(raw);
+        // 恢复尺寸与调色板
+        if (typeof s.COLS === 'number' && typeof s.ROWS === 'number') {
+            COLS = s.COLS;
+            ROWS = s.ROWS;
+        }
+        if (Array.isArray(s.colorPalette) && s.colorPalette.length > 0) {
+            colorPalette = s.colorPalette.slice();
+            basePalette = colorPalette.slice();
+        }
+        if (Array.isArray(s.currentMapping) && s.currentMapping.length === basePalette.length) {
+            currentMapping = s.currentMapping.slice();
+        } else {
+            currentMapping = basePalette.slice();
+        }
+        if (Array.isArray(s.pixelData) && s.pixelData.length === ROWS) {
+            // clone rows safely
+            pixelData = s.pixelData.map(row => Array.isArray(row) ? row.slice() : Array.from({length: COLS}, () => colorPalette[0]));
+        }
+        if (s.currentColor) currentColor = s.currentColor;
+        if (s.symmetryMode) symmetryMode = s.symmetryMode;
+
+        // 重新渲染 UI
+        renderColorPalette();
+        initRemapPanel();
+        if (typeof refreshRemapGrid === 'function') refreshRemapGrid();
+        initCanvas();
+        if (typeof refreshSymmetry === 'function') refreshSymmetry();
+
+        // showToast('已从本地恢复上次画布');
+        return true;
+    } catch (err) {
+        console.warn('恢复本地缓存失败', err);
+        return false;
+    }
+}
+
+// 在页面隐藏/卸载时保存画布
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) saveCanvasToLocal();
+});
+window.addEventListener('pagehide', saveCanvasToLocal);
+// 兼容性：在 beforeunload 也保存（setupEventListeners 中会提示是否离开）
+window.addEventListener('beforeunload', saveCanvasToLocal);
+
 
 /* ====== 鼠标坐标映射 ====== */
 function getPixelFromEvent(e) {
@@ -1666,6 +1733,38 @@ function setupEventListeners() {
             setActiveTool('eyedropper');
         }
 
+        // 避免与组合键冲突（Ctrl/Meta/Alt）
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+        const k = e.key.toLowerCase();
+        switch (k) {
+            case 'b': // 画笔
+              e.preventDefault();
+              setActiveTool('pen');
+              break;
+            case 'e': // 橡皮
+              e.preventDefault();
+              setActiveTool('eraser');
+              break;
+            case 'm': // 矩形选区
+              e.preventDefault();
+              // 触发已有按钮的行为以保持一致
+              const selBtn = document.getElementById('selRect');
+              if (selBtn) selBtn.click();
+              break;
+            case 'f': // 填充
+              e.preventDefault();
+              setActiveTool('fill');
+              break;
+            case 'g': // 切换网格
+              e.preventDefault();
+              const tg = document.getElementById('toggleGrid');
+              if (tg) tg.click();
+              break;
+            default:
+              break;
+        }
+
     });
 
     document.addEventListener('keyup', (e) => {
@@ -1731,6 +1830,7 @@ function renderColorPalette() {
     renderColorPalette();
     initRemapPanel();
     initCanvas();
+    loadCanvasFromLocal();
     setupEventListeners();
 })();
 
@@ -1752,12 +1852,6 @@ function handleUnlockClick() {
 
     spawnToyAvatar()
 }
-
-    /* Toy avatar: create, click squeeze animation, and play a "doll squeak" using WebAudio.
-   Usage:
-     - call spawnToyAvatar() to spawn the avatar (idempotent).
-     - or bind spawnToyAvatar to a button click (see example below).
-*/
 
 // 保证只创建一次
 let _toyAvatarCreated = false;
@@ -1843,11 +1937,11 @@ function spawnToyAvatar() {
   hint.textContent = '🎵';
   avatar.appendChild(hint);
 
-  avatar.innerHTML += `<img src="./aza.webp"/>`;
+  avatar.innerHTML += `<img src="./aza.webp" alt=""/>`;
 
   document.body.appendChild(avatar);
 
-  avatar.addEventListener('click', (e) => {
+  avatar.addEventListener('click', (_) => {
     avatar.classList.remove('squeeze');
     void avatar.offsetWidth;
     avatar.classList.add('squeeze');
