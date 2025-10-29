@@ -1,4 +1,4 @@
-# 🎨 像素画编辑器 v0.8.2
+# 🎨 [像素画编辑器 v0.8.2](https://nmb-court-team.github.io/pixel-art)
 (AI Generate)
 一个纯 HTML + JS 实现的像素画编辑器，支持绘制、调色、选区、对称、导入导出等多种功能。  
 无需安装，直接打开网页即可使用。  
