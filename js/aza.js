@@ -8,7 +8,7 @@ function preloadAudio() {
   if (!_audioCtx) _audioCtx = new window.AudioContext();
   const ctx = _audioCtx;
 
-  fetch('./assets/sound/duck-toy-sound.ogg')
+  fetch('../assets/duck-toy-sound.ogg')
     .then(response => response.arrayBuffer())
     .then(data => ctx.decodeAudioData(data))
     .then(buffer => {
@@ -63,7 +63,7 @@ function spawnToyAvatar() {
   avatar.setAttribute('role', 'button');
   avatar.innerHTML = `
     <div class="hint">🎵</div>
-    <img src="../aza.webp" alt=""/>
+    <img src="../assets/aza.webp" alt=""/>
   `;
 
   document.body.appendChild(avatar);
