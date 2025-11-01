@@ -21,10 +21,12 @@
     .canvas-area {
         min-width: 100%;
         width: 100%;
+        order: 0;
     }
 
     .control-panel {
         width: 100%;
+        order: 0;
     }
 
     .panel-section {

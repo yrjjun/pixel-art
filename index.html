@@ -7,10 +7,14 @@
     <link rel="stylesheet" href="css/global.css">
     <link rel="icon" href="assets/icon.png" type="image/png">
 </head>
-<body>
+<body class="dark-theme">
 <div class="container">
     <h1>🎨 像素画编辑器</h1>
+    <button id="themeToggle" class="theme-toggle">切换主题</button>
+    <button id="toggleHelp" class="toggle-help">显示使用说明</button>
+
     <div class="main-content">
+
         <div class="canvas-area">
             <div id="canvasWrapper">
                 <div id="canvas"></div>
@@ -79,18 +83,17 @@
                     <button class="symmetry-btn" data-mode="rotate8" title="8向旋转">8向旋转</button>
                 </div>
             </div>
-
-            <div class="panel-section">
+            <div class="panel-section" style="max-width: 700px; max-height: 160px; margin: 0 auto; padding: 8px;">
                 <h3>调色板</h3>
                 <div class="color-palette" id="colorPalette"></div>
-                <div style="display:flex;gap:10px;margin-top:10px">
-                </div>
+                <div style="display:flex;gap:0px;margin-top:0px"></div>
+            </div>
+            <div class="panel-section">
+                <h3>颜色重映射</h3>
+
                 <div id="paletteRemap" style="margin-top:12px;padding:10px;border:1px solid #ccc;border-radius:8px;">
-                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-                        <strong>🎨 颜色重映射：</strong>
                         <button id="shuffleColors" title="随机打乱调色板顺序">🎲</button>
                         <button id="resetRemap" title="恢复原始顺序">↩️</button>
-                    </div>
                     <div id="remapGrid"
                          style="display:grid;grid-template-columns:repeat(auto-fill, 30px);gap:8px;"></div>
                     <small style="color:#666;">点击两个颜色交换它们的映射, 或使用 🎲 随机打乱。</small>
@@ -102,7 +105,7 @@
                 <h3>导出/导入</h3>
                 <div class="btn-group" style="margin-bottom:10px">
                     <button id="exportBtn" style="flex:1">📋 导出/复制到剪贴板</button>
-                    <button id="importBtn" style="flex:1;background:#27ae60">📥 导入/从剪贴板导入</button>
+                    <button id="importBtn" style="flex:1">📥 导入/从剪贴板导入</button>
                     <button id="importImage" title="导入图片">🖼 导入图片</button>
                 </div>
                 <textarea id="exportOutput" placeholder="导出的像素画数据会显示在这里..."></textarea>

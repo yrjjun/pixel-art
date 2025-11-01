@@ -82,7 +82,6 @@ button.active {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 10px
 }
 
 .color-btn {
@@ -167,10 +166,6 @@ button[title]:hover::after {
     z-index: 80;
 }
 
-.no-grid .pixel {
-    border: none !important;
-}
-
 .toast {
     position: fixed;
     bottom: 20px;
@@ -198,6 +193,7 @@ button[title]:hover::after {
     border: 1px solid #d0d4e4;
     max-width: 800px;
     line-height: 1.6;
+    display: none;
 }
 
 /* 头像容器（右下角固定） */
@@ -251,3 +247,105 @@ button[title]:hover::after {
   pointer-events:none;
 }
 #toyAvatar:hover .hint { opacity:1; transform: translateY(0); }
+
+
+.toggle-help {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    padding: 10px 20px;
+    font-size: 14px;
+    background: #667eea;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-help:hover {
+    background: #764ba2;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    padding: 10px 20px;
+    font-size: 14px;
+    background: #667eea;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+    background: #764ba2;
+}
+
+/*深色模式*/
+body.dark-theme {
+    background: linear-gradient(135deg, #282c34 0%, #1a1d23 100%);
+    color: #707070;
+}
+
+body.dark-theme .container {
+    background: rgba(30, 30, 30, 0.95);
+}
+
+body.dark-theme h1 {
+    color: #707070;
+}
+
+body.dark-theme .panel-section {
+    background: #2f3136;
+}
+
+body.dark-theme .panel-section h3 {
+    color: #707070;
+}
+
+body.dark-theme button {
+    background: #4a4a4a;
+    color: #bdbdbd;
+}
+
+body.dark-theme button.active {
+    background: #666;
+}
+
+body.dark-theme .color-btn.selected {
+    border-color: #707070;
+    box-shadow: 0 0 0 2px #2f3136, 0 0 0 4px #707070;
+}
+
+body.dark-theme textarea {
+    border: 2px solid #4a4a4a;
+    color: #707070;
+    background: #2f3136;
+}
+
+body.dark-theme input[type="number"] {
+    border: 2px solid #4a4a4a;
+    background: #2f3136;
+    color: #707070;
+}
+
+body.dark-theme .small-note {
+    color: #707070;
+}
+
+body.dark-theme .help-section {
+    margin-top: 20px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: #2f3136;
+    border: 1px solid #707070;
+    max-width: 800px;
+    line-height: 1.6;
+    display: none;
+}

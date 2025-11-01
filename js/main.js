@@ -1,5 +1,24 @@
 // ⚙️ 移动设备检测
 if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    // 使用纯 JavaScript 选择包含 "调色板" 标题的 .panel-section
+    const panelSections = document.querySelectorAll('.panel-section');
+    let colorPaletteSection = null;
+
+    for (let section of panelSections) {
+        const h3 = section.querySelector('h3');
+        if (h3 && h3.textContent.includes('调色板')) {
+            colorPaletteSection = section;
+            break;
+        }
+    }
+
+    const mainContent = document.querySelector('.main-content');
+
+    if (colorPaletteSection && mainContent) {
+        // 将调色板部分移动到 .main-content 的第一个子元素位置
+        mainContent.insertBefore(colorPaletteSection, mainContent.firstChild);
+    }
+
     alert("移动设备访问有部分工具会无法使用，推荐使用桌面浏览器以获得完整体验");
 }
 
@@ -157,12 +176,36 @@ function setupEventListeners() {
         }
     });
 
-
     // 防拖拽
     canvas.addEventListener("dragstart", (e) => {
         e.preventDefault();
         return false;
     });
+
+    // 切换主题的函数
+    function toggleTheme() {
+        const body = document.body;
+        body.classList.toggle('dark-theme');
+    }
+
+    // 添加事件监听器到主题切换按钮
+    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+    // 切换使用说明的显示与隐藏
+    function toggleHelpSection() {
+        const helpSection = document.getElementById('helpSection');
+        if (helpSection.style.display === 'none' || helpSection.style.display === '') {
+            helpSection.style.display = 'block';
+            document.getElementById('toggleHelp').textContent = '隐藏使用说明';
+            helpSection.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            helpSection.style.display = 'none';
+            document.getElementById('toggleHelp').textContent = '显示使用说明';
+        }
+    }
+
+    // 添加事件监听器到使用说明切换按钮
+    document.getElementById('toggleHelp').addEventListener('click', toggleHelpSection);
 }
 
 /* ====== 初始化入口 ====== */
