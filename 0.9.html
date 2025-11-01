@@ -1456,6 +1456,7 @@ function getPixelFromEvent(e) {
 /* ====== 事件处理 ====== */
 let isDrawing = false;
 let startX = null, startY = null;
+let lastDrawX = null, lastDrawY = null; // 记录上一次绘制的位置
 
 function setupEventListeners() {
     // 恢复：关闭/刷新前提示（原版）
@@ -1706,6 +1707,8 @@ function setupEventListeners() {
         if (tool === "pen" || tool === "eraser") {
             isDrawing = true;
             currentStep = [];
+            lastDrawX = pos.x; // 记录起始位置
+            lastDrawY = pos.y;
             drawPixel(pos.x, pos.y, null); // drawPixel 记录到 currentStep
             canvas._curStep = currentStep;
             return;
@@ -1771,9 +1774,19 @@ function setupEventListeners() {
             return;
         }
 
-        // 绘图拖动
+        // 绘图拖动 - 使用直线插值避免断线
         if (isDrawing && (tool === "pen" || tool === "eraser")) {
-            drawPixel(pos.x, pos.y, null);
+            if (lastDrawX !== null && lastDrawY !== null) {
+                // 使用 Bresenham 算法连接上一个点和当前点
+                const linePixels = getLinePixels(lastDrawX, lastDrawY, pos.x, pos.y);
+                linePixels.forEach(p => {
+                    drawPixel(p.x, p.y, null);
+                });
+            } else {
+                drawPixel(pos.x, pos.y, null);
+            }
+            lastDrawX = pos.x;
+            lastDrawY = pos.y;
             return;
         }
 
@@ -1815,6 +1828,8 @@ function setupEventListeners() {
         // 绘图结束 -> 历史记录
         if (isDrawing) {
             isDrawing = false;
+            lastDrawX = null; // 重置上一次绘制位置
+            lastDrawY = null;
             if (canvas._curStep && canvas._curStep.length > 0) {
                 pushHistory(canvas._curStep);
                 canvas._curStep = null;
