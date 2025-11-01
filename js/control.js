@@ -91,11 +91,17 @@ const toolHandlers = {
             isDrawing = true;
             currentStep = [];
             drawPixel(pos.x, pos.y);
+            lastDrawX = pos.x;
+            lastDrawY = pos.y;
             canvas._curStep = currentStep;
         },
         move(pos) {
             if (lastDrawX !== null) drawInterpolatedLine(lastDrawX, lastDrawY, pos.x, pos.y);
-            else drawPixel(pos.x, pos.y);
+            else {
+                drawPixel(pos.x, pos.y);
+                lastDrawX = pos.x;
+                lastDrawY = pos.y;
+            }
         },
         up: finalizeDrawing
     },
@@ -105,12 +111,19 @@ const toolHandlers = {
             isDrawing = true;
             currentStep = [];
             drawPixel(pos.x, pos.y, colorPalette[0]);
+            lastDrawX = pos.x;
+            lastDrawY = pos.y;
             canvas._curStep = currentStep;
         },
         move(pos) {
             if (lastDrawX !== null)
                 drawInterpolatedLine(lastDrawX, lastDrawY, pos.x, pos.y, colorPalette[0]);
-            else drawPixel(pos.x, pos.y, colorPalette[0]);
+            else {
+                drawPixel(pos.x, pos.y, colorPalette[0]);
+                lastDrawX = pos.x;
+                lastDrawY = pos.y;
+            }
+
         },
         up: finalizeDrawing
     },

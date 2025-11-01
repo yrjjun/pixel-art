@@ -63,7 +63,7 @@ function spawnToyAvatar() {
   avatar.setAttribute('role', 'button');
   avatar.innerHTML = `
     <div class="hint">🎵</div>
-    <img src="../assets/img/aza.webp" alt=""/>
+    <img src="../aza.webp" alt=""/>
   `;
 
   document.body.appendChild(avatar);
