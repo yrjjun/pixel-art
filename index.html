@@ -1457,6 +1457,8 @@ function getPixelFromEvent(e) {
 let isDrawing = false;
 let startX = null, startY = null;
 let lastDrawX = null, lastDrawY = null; // 记录上一次绘制的位置
+let pendingMousePos = null; // 待处理的鼠标位置
+let rafId = null; // requestAnimationFrame ID
 
 function setupEventListeners() {
     // 恢复：关闭/刷新前提示（原版）
@@ -1742,15 +1744,24 @@ function setupEventListeners() {
         }
     });
 
-    canvas.addEventListener("mousemove", (e) => {
-        const pos = getPixelFromEvent(e);
-        if (!pos) return;
-        currentMousePos = pos
+    // 使用 requestAnimationFrame 优化 mousemove 处理
+    function processMouseMove() {
+        if (!pendingMousePos) {
+            rafId = null;
+            return;
+        }
+
+        const pos = pendingMousePos;
+        const shiftKey = pendingMousePos.shiftKey;
+        pendingMousePos = null;
+
+        currentMousePos = pos;
 
         // 矩形选取拖动：按 Shift 叠加（add=true）
         if (isSelecting && selectionMode === 'rect' && dragStart) {
-            const add = e.shiftKey;
+            const add = shiftKey;
             setSelectionFromRect(dragStart.x, dragStart.y, pos.x, pos.y, add);
+            rafId = null;
             return;
         }
         // 手涂选取：逐像素切换（进入新像素才切换一次）
@@ -1760,6 +1771,7 @@ function setupEventListeners() {
                 toggleSelectionPixel(pos.x, pos.y);
                 lastToggledKey = key;
             }
+            rafId = null;
             return;
         }
         // 粘贴/移动拖动预览
@@ -1771,28 +1783,48 @@ function setupEventListeners() {
             };
             dragStart = pos;
             renderSelectionLayer();
+            rafId = null;
             return;
         }
 
-        // 绘图拖动 - 使用直线插值避免断线
+        // 绘图拖动 - 使用直线插值避免断线，批量更新 DOM
         if (isDrawing && (tool === "pen" || tool === "eraser")) {
+            const pixelsToUpdate = [];
+            
             if (lastDrawX !== null && lastDrawY !== null) {
                 // 使用 Bresenham 算法连接上一个点和当前点
                 const linePixels = getLinePixels(lastDrawX, lastDrawY, pos.x, pos.y);
                 linePixels.forEach(p => {
-                    drawPixel(p.x, p.y, null);
+                    const color = (tool === "eraser") ? colorPalette[0] : currentColor;
+                    const pts = getSymmetryPoints(p.x, p.y);
+                    pts.forEach(pt => {
+                        const oldColor = pixelData[pt.y][pt.x];
+                        if (oldColor !== color) {
+                            if (currentStep) currentStep.push({x: pt.x, y: pt.y, oldColor, newColor: color});
+                            pixelData[pt.y][pt.x] = color;
+                            pixelsToUpdate.push({x: pt.x, y: pt.y, color});
+                        }
+                    });
                 });
             } else {
                 drawPixel(pos.x, pos.y, null);
             }
+            
+            // 批量更新 DOM
+            pixelsToUpdate.forEach(p => {
+                const pixel = canvas.querySelector(`.pixel[data-x="${p.x}"][data-y="${p.y}"]`);
+                if (pixel) pixel.style.backgroundColor = p.color;
+            });
+            
             lastDrawX = pos.x;
             lastDrawY = pos.y;
+            rafId = null;
             return;
         }
 
         // 形状预览
         if (startX !== null && startY !== null) {
-            const hollow = e.shiftKey;
+            const hollow = shiftKey;
             let pixels = [];
             if (tool === "line") pixels = getLinePixels(startX, startY, pos.x, pos.y);
             else if (tool === "rect") pixels = getRectPixels(startX, startY, pos.x, pos.y, hollow);
@@ -1801,6 +1833,25 @@ function setupEventListeners() {
                 pixels = getCirclePixels(startX, startY, r, hollow);
             }
             renderPreview(pixels);
+        }
+
+        rafId = null;
+    }
+
+    canvas.addEventListener("mousemove", (e) => {
+        const pos = getPixelFromEvent(e);
+        if (!pos) return;
+
+        // 保存鼠标位置和修饰键状态
+        pendingMousePos = {
+            x: pos.x,
+            y: pos.y,
+            shiftKey: e.shiftKey
+        };
+
+        // 使用 requestAnimationFrame 节流处理
+        if (!rafId) {
+            rafId = requestAnimationFrame(processMouseMove);
         }
     });
 
