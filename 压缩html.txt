@@ -1,1 +1,0 @@
-html-minifier-terser ./0.9.html -o ./index.html --collapse-whitespace --remove-comments --remove-redundant-attributes --remove-empty-attributes --minify-css true --minify-js true
