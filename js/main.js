@@ -1,36 +1,9 @@
 // ⚙️ 移动设备检测
 if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    // // 使用纯 JavaScript 选择包含 "调色板" 标题的 .panel-section
-    // const panelSections = document.querySelectorAll('.panel-section');
-    // let colorPaletteSection = null;
-    //
-    // for (let section of panelSections) {
-    //     const h3 = section.querySelector('h3');
-    //     if (h3 && h3.textContent.includes('调色板')) {
-    //         colorPaletteSection = section;
-    //         break;
-    //     }
-    // }
-    //
-    // const mainContent = document.querySelector('.main-content');
-    //
-    // if (colorPaletteSection && mainContent) {
-    //     // 将调色板部分移动到 .main-content 的第一个子元素位置
-    //     mainContent.insertBefore(colorPaletteSection, mainContent.firstChild);
-    // }
-
     alert("移动设备访问有部分工具会无法使用，推荐使用桌面浏览器以获得完整体验");
 }
 
-/* ====== 基础配置 ====== */
-let COLS = 45, ROWS = 45;
-let PIXEL_SIZE = 10;
-
 /* ====== 事件处理 ====== */
-let isDrawing = false;
-let startX = null, startY = null;
-let lastDrawX = null, lastDrawY = null; // 记录上一次绘制的位置
-
 function setupEventListeners() {
     // 恢复：关闭/刷新前提示（原版）
     window.addEventListener("beforeunload", (e) => {
@@ -142,15 +115,13 @@ function setupEventListeners() {
     document.querySelector('.symmetry-btn[data-mode="none"]').classList.add("active");
 
     // 添加触摸事件监听
-    canvas.addEventListener('touchstart', handleTouchStart, {passive: false});
-    canvas.addEventListener('touchmove', handleTouchMove, {passive: false});
-    canvas.addEventListener('touchend', handleTouchEnd, {passive: false});
-    canvas.addEventListener('touchcancel', handleTouchEnd, {passive: false});
+    // canvas.addEventListener('touchstart', handleTouchStart, {passive: false});
+    // canvas.addEventListener('touchmove', handleTouchMove, {passive: false});
+    // canvas.addEventListener('touchend', handleTouchEnd, {passive: false});
+    // canvas.addEventListener('touchcancel', handleTouchEnd, {passive: false});
 
     canvas.addEventListener("mousedown", (e) => handleMouseDown(e));
-
     canvas.addEventListener("mousemove", (e) => handleMouseMove(e));
-
     document.addEventListener("mouseup", (e) => handleMouseUp(e));
 
     // 键盘：Enter 确认粘贴/移动；Esc 清除；Ctrl 快捷键（但如果焦点在输入框/文本域/可编辑元素中则放行原生）

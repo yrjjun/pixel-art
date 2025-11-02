@@ -379,6 +379,7 @@ function cutSelection() {
     selectionPixels.clear();
     updateSelectionBounds();
     renderSelectionLayer();
+    beginPaste()
 }
 
 /* 开始粘贴（或移动）预览 — 粘贴由 beginPaste() 启动, 回车 applyPaste() */

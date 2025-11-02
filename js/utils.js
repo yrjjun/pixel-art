@@ -42,12 +42,3 @@ function hexToRgb(hex) {
     const n = parseInt(hex.slice(1), 16);
     return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
 }
-
-/* ====== 鼠标坐标映射 ====== */
-function getPixelFromEvent(e) {
-    const rect = canvas.getBoundingClientRect();
-    const x = Math.floor((e.clientX - rect.left) / PIXEL_SIZE);
-    const y = Math.floor((e.clientY - rect.top) / PIXEL_SIZE);
-    if (x >= 0 && x < COLS && y >= 0 && y < ROWS) return {x, y};
-    return null;
-}

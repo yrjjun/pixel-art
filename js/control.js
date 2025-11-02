@@ -5,6 +5,9 @@ let rafId = null;
 let isColorPicking = false;
 let previousTool = null;   // 用来临时记住上一个工具
 let dragStart = null;
+let isDrawing = false;
+let startX = null, startY = null;
+let lastDrawX = null, lastDrawY = null; // 记录上一次绘制的位置
 
 /* ====== DOM 缓存 ====== */
 const dom = {
@@ -177,6 +180,15 @@ function handleMouseDown(e) {
         startX = pos.x;
         startY = pos.y;
     }
+}
+
+/* ====== 鼠标坐标映射 ====== */
+function getPixelFromEvent(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.floor((e.clientX - rect.left) / PIXEL_SIZE);
+    const y = Math.floor((e.clientY - rect.top) / PIXEL_SIZE);
+    if (x >= 0 && x < COLS && y >= 0 && y < ROWS) return {x, y};
+    return null;
 }
 
 function handleMouseMove(e) {
