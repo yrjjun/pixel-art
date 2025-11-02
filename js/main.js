@@ -1,23 +1,23 @@
 // ⚙️ 移动设备检测
 if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    // 使用纯 JavaScript 选择包含 "调色板" 标题的 .panel-section
-    const panelSections = document.querySelectorAll('.panel-section');
-    let colorPaletteSection = null;
-
-    for (let section of panelSections) {
-        const h3 = section.querySelector('h3');
-        if (h3 && h3.textContent.includes('调色板')) {
-            colorPaletteSection = section;
-            break;
-        }
-    }
-
-    const mainContent = document.querySelector('.main-content');
-
-    if (colorPaletteSection && mainContent) {
-        // 将调色板部分移动到 .main-content 的第一个子元素位置
-        mainContent.insertBefore(colorPaletteSection, mainContent.firstChild);
-    }
+    // // 使用纯 JavaScript 选择包含 "调色板" 标题的 .panel-section
+    // const panelSections = document.querySelectorAll('.panel-section');
+    // let colorPaletteSection = null;
+    //
+    // for (let section of panelSections) {
+    //     const h3 = section.querySelector('h3');
+    //     if (h3 && h3.textContent.includes('调色板')) {
+    //         colorPaletteSection = section;
+    //         break;
+    //     }
+    // }
+    //
+    // const mainContent = document.querySelector('.main-content');
+    //
+    // if (colorPaletteSection && mainContent) {
+    //     // 将调色板部分移动到 .main-content 的第一个子元素位置
+    //     mainContent.insertBefore(colorPaletteSection, mainContent.firstChild);
+    // }
 
     alert("移动设备访问有部分工具会无法使用，推荐使用桌面浏览器以获得完整体验");
 }
