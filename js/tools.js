@@ -475,13 +475,26 @@ function applyPaste() {
 
 /* 取消选区/粘贴 */
 function clearSelection() {
-    // clipboard = null;
+    // 如果当前处于粘贴或移动预览状态, 用户按取消时我们改为“放下并关闭预览”以符合期望行为
+    if ((selectionMode === 'paste' || selectionMode === 'move') && clipboard) {
+        applyPaste();
+        return;
+    }
+
+    // 否则默认只取消当前的选区显示/状态，但保留剪贴板与粘贴内容，
+    // 以便用户在按 Esc 或点击“清除选区”后仍能继续粘贴之前复制的内容。
     selectionPixels.clear();
     selectionBounds = null;
-    pasteOffset = null;
     moveOrigin = null;
-    selectionMode = null;
-    setActiveSelection(null)
+    // 重置交互相关标志，避免阻塞后续选区操作
+    isSelecting = false;
+    isDraggingPaste = false;
+    // 也重置拖拽起点/上次切换的键，防止卡住
+    try { dragStart = null; } catch (e) { /* dragStart 可能在另一个模块定义 */ }
+    lastToggledKey = null;
+    // 退出选区 UI 状态（但不要清空 clipboard/pasteOffset）
+    if (selectionMode === 'rect' || selectionMode === 'free') selectionMode = null;
+    setActiveSelection(null);
     renderSelectionLayer();
 }
 
